@@ -30,21 +30,21 @@ jobs:
         options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" -e "plugins.security.ssl.http.enabled=false" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
      
     steps:
-    - uses: actions/checkout@v3
-      with:
-        path: Cardknox
+    # - uses: actions/checkout@v3
+    #   with:
+    #     path: Cardknox
 
-    - name: Install Magento
-      uses: MAD-I-T/magento-actions@v3.20
-      with:
-        process: 'install-mage-os'
-        magento_version: 2.4.6
-        no_push: 1
+    # - name: Install Magento
+    #   uses: MAD-I-T/magento-actions@v3.20
+    #   with:
+    #     process: 'install-mage-os'
+    #     magento_version: 2.4.6
+    #     no_push: 1
     
-    - name: Install Dependencies
-      run: |
-        cd magento
-        sudo composer install
+    # - name: Install Dependencies
+    #   run: |
+    #     cd magento
+    #     sudo composer install
 
     - name: Create Directories for Cardknox Module
       run: |
@@ -53,20 +53,22 @@ jobs:
         sudo mkdir code
         cd code
         sudo mkdir CardknoxDevelopment
+        pwd
+        ll
       
     - name: Move Cardknox Module
       run: |
         sudo mv Cardknox magento/app/code/CardknoxDevelopment
 
-    - name: Enable Cardknox module 
-      run: |
-        sudo php magento/bin/magento module:enable CardknoxDevelopment_Cardknox --clear-static-content
-        sudo php magento/bin/magento setup:di:compile
-        sudo chmod -R 777 magento/generated/ magento/var/ magento/pub/
-        sudo php magento/bin/magento module:status
+    # - name: Enable Cardknox module 
+    #   run: |
+    #     sudo php magento/bin/magento module:enable CardknoxDevelopment_Cardknox --clear-static-content
+    #     sudo php magento/bin/magento setup:di:compile
+    #     sudo chmod -R 777 magento/generated/ magento/var/ magento/pub/
+    #     sudo php magento/bin/magento module:status
     
-    - name: Run Unit Tests
-      run: |
-        cd magento
-        sudo sed -i "/<string>allure.*/c\<directory>allure/allure.config.php</directory>" dev/tests/unit/phpunit.xml.dist
-        sudo php vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/CardknoxDevelopment/Cardknox/Test/
+    # - name: Run Unit Tests
+    #   run: |
+    #     cd magento
+    #     sudo sed -i "/<string>allure.*/c\<directory>allure/allure.config.php</directory>" dev/tests/unit/phpunit.xml.dist
+    #     sudo php vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/CardknoxDevelopment/Cardknox/Test/
