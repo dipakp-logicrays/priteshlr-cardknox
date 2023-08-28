@@ -70,3 +70,4 @@
 #         cd magento
 #         sudo sed -i "/<string>allure.*/c\<directory>allure/allure.config.php</directory>" dev/tests/unit/phpunit.xml.dist
 #         sudo php vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/CardknoxDevelopment/Cardknox/Test/
+
